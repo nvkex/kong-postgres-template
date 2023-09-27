@@ -1,0 +1,56 @@
+version: '2'
+services:
+  postgres:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=kong
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  kong-migration:
+    image: kong:latest
+    command: "kong migrations bootstrap --v"
+    volumes:
+      - ./:/etc/kong/
+    restart: on-failure
+    environment:
+      - KONG_PG_HOST=postgres
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  kong:
+    image: kong:latest
+    volumes:
+      - ./kong.yml:/usr/local/kong/declarative/kong.yml
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_USER=kong
+      - KONG_PG_PASSWORD=root
+      - KONG_PG_DATABASE=kong
+      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+    env_file:
+      - .env
+    ports:
+      - "8002:8000"
+      - "8443:8443"
+      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:8444:8444"
+    depends_on:
+      - postgres
+    
