@@ -7,12 +7,12 @@ services:
       - name: gists-route
         paths:
           - /gists
-  - name: activity-service
-    url: https://www.boredapi.com/api/activity
-    routes:
-      - name: activity-route
-        paths:
-          - /activity
+  # - name: activity-service
+  #   url: https://www.boredapi.com/api/activity
+  #   routes:
+  #     - name: activity-route
+  #       paths:
+  #         - /activity
 
 plugins:
   - name: rate-limiting

@@ -1,0 +1,47 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "KongAPI",
+    "dateExported": "2023-09-27T05:39:18.438Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "7ee27a61-961b-4b7d-b7ca-8da31804a1b8",
+            "colId": "4223c4e9-516c-40ae-b57e-0341deeb4b79",
+            "containerId": "",
+            "name": "Create Route",
+            "url": "http://localhost:8001/services/example_service/routes",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-09-27T05:39:05.974Z",
+            "modified": "2023-09-27T05:39:05.974Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"example_service_route\",\n  \"paths\": [\"/example\"]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "76e5a9ea-9d54-4486-95ef-fc2df78e1de3",
+            "colId": "4223c4e9-516c-40ae-b57e-0341deeb4b79",
+            "containerId": "",
+            "name": "Create Service",
+            "url": "http://localhost:8001/services",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-09-27T05:39:12.941Z",
+            "modified": "2023-09-27T05:39:12.941Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"example_service\",\n  \"url\": \"http://mockbin.org\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
